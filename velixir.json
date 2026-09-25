@@ -1,0 +1,15 @@
+{
+  "name": "Background jobs",
+  "tagline": "A job queue with a live dashboard, on managed Valkey.",
+  "description": "Answer every request straight away and do the slow part in the background. A dashboard enqueues jobs and shows them live, and a BullMQ worker in the same process runs them with progress, retries with exponential backoff, graceful shutdown and a bounded history. One environment variable splits the worker into its own app when you need to scale it. Deploying it creates a managed Valkey and connects it for you. Needs an always-on plan, because a sleeping app runs no jobs.",
+  "language": "Node",
+  "runtimeVersion": "22",
+  "accent": "#EA580C",
+  "tags": ["Managed Valkey", "BullMQ", "Workers"],
+  "topics": ["nodejs", "bullmq", "valkey", "redis", "job-queue", "background-jobs", "express"],
+  "minMemoryMb": 256,
+  "alwaysOn": true,
+  "services": {
+    "valkey": { "env": "REDIS_URL" }
+  }
+}
