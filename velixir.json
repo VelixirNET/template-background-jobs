@@ -10,6 +10,6 @@
   "minMemoryMb": 256,
   "alwaysOn": true,
   "services": {
-    "valkey": { "env": "REDIS_URL" }
+    "valkey": { "env": "REDIS_URL", "eviction": "noeviction" }
   }
 }

@@ -119,12 +119,13 @@ restarts, waiting jobs and history are gone. For work you cannot afford to lose,
 plan with persistence, or keep the source of truth in Postgres and use the queue to schedule
 work on it.
 
-**BullMQ warns about eviction on startup.** The logs show `IMPORTANT! Eviction policy is
-allkeys-lru. It should be "noeviction"`. velixir's managed Valkey is a cache first: when it
-reaches its memory limit it drops the least recently used keys, which could include a queued
-job. The retention limits above keep this template at a couple of megabytes, far below any
-plan's limit. Keep job data small and do not share the cache with a heavy caching workload,
-and the warning stays theoretical.
+**The cache never evicts your jobs.** A one-click deploy creates the Valkey with eviction
+turned off (`noeviction`), the setting BullMQ asks for, so it does not print its eviction
+warning and a full cache never quietly drops a queued job: new writes fail with an
+out-of-memory error instead, which BullMQ reports and retries. The retention limits above keep
+this template at a couple of megabytes, far below any plan's limit. If you connected a cache
+you created yourself, tick **Never evict keys** on its Edit page; it applies straight away, with
+no restart.
 
 **The dashboard has no login.** Anyone with the URL can read job names and enqueue the demo
 job. That is fine for a demo, and the backlog cap limits the damage, but put it behind
